@@ -1,0 +1,3 @@
+- OAuth2 Protocol
+- Camada PKCE retorna o token via deep link redirect
+- Armazena o token e infos no MongoDB Atlas
