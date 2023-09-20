@@ -1,4 +1,5 @@
-import { TextInputProps } from 'react-native';
+import { forwardRef } from 'react';
+import { TextInput, TextInputProps } from 'react-native';
 import * as S from './styles';
 import { useTheme } from 'styled-components/native';
 
@@ -6,7 +7,7 @@ type Props = TextInputProps & {
   label: string;
 }
 
-export function TextAreaInput({ label, ...rest }: Props) {
+const TextAreaInput = forwardRef<TextInput, Props>(({ label, ...rest }, ref) => {
  const { COLORS } = useTheme();
 
   return (
@@ -16,6 +17,7 @@ export function TextAreaInput({ label, ...rest }: Props) {
       </S.Label>
 
       <S.Input 
+        ref={ref}
         placeholderTextColor={COLORS.GRAY_400}
         multiline
         autoCapitalize='sentences'
@@ -23,4 +25,6 @@ export function TextAreaInput({ label, ...rest }: Props) {
       />
     </S.Container>
   );
-}
+})
+
+export { TextAreaInput }
