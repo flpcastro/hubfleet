@@ -8,7 +8,7 @@ export function Home() {
       <HomeHeader />
 
       <S.Content>
-        <CarStatus licensePlate="XXX-0000" />
+        <CarStatus />
       </S.Content>
     </S.Container>
   );
