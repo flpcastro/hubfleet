@@ -1,10 +1,15 @@
+import { CarStatus } from '../../components/CarStatus';
 import { HomeHeader } from '../../components/HomeHeader';
-import { Container } from './styles';
+import * as S from './styles';
 
 export function Home() {
   return (
-    <Container>
+    <S.Container>
       <HomeHeader />
-    </Container>
+
+      <S.Content>
+        <CarStatus licensePlate="XXX-0000" />
+      </S.Content>
+    </S.Container>
   );
 }
