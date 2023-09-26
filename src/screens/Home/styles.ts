@@ -8,5 +8,4 @@ export const Container = styled.View`
 export const Content = styled.View`
   flex: 1;
   padding: 0 32px;
-  
 `;
