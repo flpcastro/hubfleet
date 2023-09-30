@@ -56,6 +56,10 @@ export function Home() {
     }
   }
 
+  function handleHistoricDetails(id: string) {
+    navigate('arrival', { id });
+  }
+
   useEffect(() => {
     fetchVehicleInUse();
   }, [])
@@ -89,6 +93,7 @@ export function Home() {
           renderItem={({ item }) => (
             <HistoricCard 
               data={item}
+              onPress={() => handleHistoricDetails(item.id)}
             />
           )}
           showsVerticalScrollIndicator={false}
