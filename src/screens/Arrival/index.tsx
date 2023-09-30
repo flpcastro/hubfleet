@@ -22,6 +22,8 @@ export function Arrival() {
 
   const { goBack } = useNavigation();
 
+  const title = historic?.status === 'departure' ? 'Chegada' : 'Detalhes';
+
   function handleRemoveVehicleUsage() {
     Alert.alert(
       'Cancelar', 
@@ -63,7 +65,7 @@ export function Arrival() {
   return (
     <S.Container>
       <Header 
-        title='Chegada'
+        title={title}
       />
 
       <S.Content>
@@ -83,17 +85,20 @@ export function Arrival() {
           {historic?.description}
         </S.Description>
 
-        <S.Footer>
-          <ButtonIcon 
-            icon={X}
-            onPress={handleRemoveVehicleUsage}
-          />
+        {
+          historic?.status === 'departure' &&
+          <S.Footer>
+            <ButtonIcon 
+              icon={X}
+              onPress={handleRemoveVehicleUsage}
+            />
 
-          <Button 
-            title='Registrar Chegada'
-            onPress={handleArrivalRegister}
-          />
-        </S.Footer>
+            <Button 
+              title='Registrar Chegada'
+              onPress={handleArrivalRegister}
+            />
+          </S.Footer>
+        }
       </S.Content>
       
     </S.Container>
