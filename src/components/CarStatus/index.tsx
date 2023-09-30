@@ -20,7 +20,7 @@ export function CarStatus({ licensePlate = null, ...rest }: Props) {
     >
       <S.IconBox>
         <Icon 
-          size={32}
+          size={52}
           color={theme.COLORS.BRAND_LIGHT}
         />
       </S.IconBox>
