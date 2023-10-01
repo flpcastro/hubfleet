@@ -9,6 +9,7 @@ import { Alert, FlatList } from 'react-native';
 import { HistoricCard, HistoricCardProps } from '../../components/HistoricCard';
 import dayjs from 'dayjs';
 import { useUser } from '@realm/react';
+import { getLastSyncTimestamp, saveLastSyncTimestamp } from '../../libs/asyncStorage/syncStorage';
 
 export function Home() {
   const [vehicleInUse, setVehicleInUse] = useState<Historic | null>(null);
@@ -38,15 +39,17 @@ export function Home() {
     }
   }
 
-  function fetchHistoric() {
+  async function fetchHistoric() {
     try {
       const response = historic.filtered("status = 'arrival' SORT(created_at DESC)");
+
+      const lastSync = await getLastSyncTimestamp();
 
       const formattedHistoric = response.map((item) => {
         return ({
           id: item._id!.toString(),
           licensePlate: item.license_plate,
-          isSync: false,
+          isSync: lastSync > item.updated_at!.getTime(),
           created: dayjs(item.created_at).format('[Saída em] DD/MM/YYYY [às] HH:mm'),
         })
       })
@@ -62,9 +65,13 @@ export function Home() {
     navigate('arrival', { id });
   }
 
-  function progressNotification(transferred: number, transferable: number) {
+  async function progressNotification(transferred: number, transferable: number) {
     const percentage = (transferred / transferable) * 100;
-    console.log(percentage);
+    
+    if(percentage === 100) {
+      await saveLastSyncTimestamp();
+      fetchHistoric();
+    }
   }
 
   useEffect(() => {
