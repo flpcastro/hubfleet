@@ -8,12 +8,16 @@ import { Historic } from '../../libs/realm/schemas/Historic';
 import { BSON } from 'realm';
 import { useObject, useRealm } from '../../libs/realm';
 import { Alert } from 'react-native';
+import { useEffect, useState } from 'react';
+import { getLastSyncTimestamp } from '../../libs/asyncStorage/syncStorage';
 
 type RouteParamsProps = {
   id: string;
 }
 
 export function Arrival() {
+  const [dataNotSynced, setDataNotSynced] = useState(false);
+
   const route = useRoute();
   const { id } = route.params as RouteParamsProps;
 
@@ -62,6 +66,14 @@ export function Arrival() {
     }
   }
 
+  useEffect(() => {
+    getLastSyncTimestamp()
+      .then(lastSync => setDataNotSynced(
+        historic!.updated_at.getTime() > lastSync
+        )
+      );
+  }, [])
+
   return (
     <S.Container>
       <Header 
@@ -99,6 +111,13 @@ export function Arrival() {
             onPress={handleArrivalRegister}
           />
         </S.Footer>
+      }
+
+      {
+        dataNotSynced &&
+        <S.AsyncMessage>
+          Sincronização da { historic?.status === 'departure' ? 'partida' : 'chegada'} pendente
+        </S.AsyncMessage>
       }
     </S.Container>
   );
