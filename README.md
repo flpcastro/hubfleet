@@ -61,7 +61,7 @@ Execute no emulador de sua preferência
 - Armazena o token e infos no MongoDB Atlas
 
 ```
-ematerappcliente
+hubfleet
 ├── android/
 ├── assets/
 ├── ios/
